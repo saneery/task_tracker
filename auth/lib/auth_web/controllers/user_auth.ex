@@ -140,6 +140,18 @@ defmodule AuthWeb.UserAuth do
     end
   end
 
+  def require_role(conn, roles) do
+    if conn.assigns[:current_user] && conn.assigns[:current_user].role in roles do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must have role #{inspect(roles)} to access this page.")
+      |> maybe_store_return_to()
+      |> redirect(to: Routes.user_session_path(conn, :new))
+      |> halt()
+    end
+  end
+
   defp maybe_store_return_to(%{method: "GET"} = conn) do
     put_session(conn, :user_return_to, current_path(conn))
   end

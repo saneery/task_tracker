@@ -17,6 +17,12 @@ defmodule AuthWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :only_admin do
+    plug :browser
+    plug :require_authenticated_user
+    plug :require_role, [:admin]
+  end
+
   scope "/", AuthWeb do
     pipe_through :browser
 
@@ -78,6 +84,12 @@ defmodule AuthWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+  end
+
+  scope "/admin", AuthWeb do
+    pipe_through :only_admin
+
+    resources "/users", UserController, except: [:new]
   end
 
   scope "/", AuthWeb do

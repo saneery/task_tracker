@@ -9,6 +9,11 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+attrs = %{email: "admin@admin.com", password: "admin", role: :admin}
+%Auth.Accounts.User{}
+|> Auth.Accounts.User.registration_changeset(attrs)
+|> Auth.Accounts.User.changeset(attrs)
+|> Auth.Repo.insert()
 
 id = SecureRandom.uuid()
 
