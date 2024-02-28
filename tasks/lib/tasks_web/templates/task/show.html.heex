@@ -1,0 +1,28 @@
+<h1>Show Task</h1>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @task.title %>
+  </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @task.status %>
+  </li>
+
+  <li>
+    <strong>Closed at:</strong>
+    <%= @task.closed_at %>
+  </li>
+
+  <li>
+    <strong>Assigned user:</strong>
+    <%= @task.assigned_user_id %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.task_path(@conn, :edit, @task) %></span> |
+<span><%= link "Back", to: Routes.task_path(@conn, :index) %></span>
