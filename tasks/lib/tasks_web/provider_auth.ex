@@ -20,7 +20,7 @@ defmodule TasksWeb.ProviderAuth do
   def normalize(_config, user) do
     {:ok,
       %{
-        "sub" => user["id"],
+        "sub" => user["public_id"],
         "name" => user["email"],
         "email" => user["email"],
         "role" => user["role"]

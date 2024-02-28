@@ -61,7 +61,7 @@ defmodule AuthWeb.OauthView do
 
   def render("user.json", %{user: user}) do
     %{
-      id: user.id,
+      public_id: user.public_id,
       role: user.role,
       email: user.email
     }

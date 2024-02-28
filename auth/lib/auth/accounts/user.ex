@@ -3,6 +3,7 @@ defmodule Auth.Accounts.User do
   import Ecto.Changeset
 
   schema "users" do
+    field :public_id, :string
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
@@ -39,6 +40,7 @@ defmodule Auth.Accounts.User do
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:email, :password])
+    |> create_public_id()
     |> validate_email()
     |> validate_password(opts)
   end
@@ -75,6 +77,11 @@ defmodule Auth.Accounts.User do
     else
       changeset
     end
+  end
+
+  def create_public_id(changeset) do
+    changeset
+    |> put_change(:public_id, SecureRandom.uuid())
   end
 
   @doc """
