@@ -90,12 +90,18 @@ defmodule AuthWeb.Router do
     post "/users/confirm/:token", UserConfirmationController, :update
   end
 
+  scope "/api", AuthWeb do
+    pipe_through :api
+
+    get "/user", PageController, :userinfo
+  end
+
   scope "/oauth", AuthWeb.Oauth do
     pipe_through :api
 
     post "/revoke", RevokeController, :revoke
     post "/token", TokenController, :token
-    post "/introspect", IntrospectController, :introspect
+    get "/introspect", IntrospectController, :introspect
   end
 
   scope "/oauth", AuthWeb.Oauth do

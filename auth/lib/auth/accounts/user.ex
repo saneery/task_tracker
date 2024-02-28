@@ -8,7 +8,7 @@ defmodule Auth.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
     field :last_login_at, :utc_datetime_usec
-    field :role, Ecto.Enum, values: [:admin, :manager, :employee]
+    field :role, Ecto.Enum, values: [:admin, :manager, :employee], default: :employee
 
     timestamps()
   end

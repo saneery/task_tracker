@@ -59,6 +59,14 @@ defmodule AuthWeb.OauthView do
     end
   end
 
+  def render("user.json", %{user: user}) do
+    %{
+      id: user.id,
+      role: user.role,
+      email: user.email
+    }
+  end
+
   def render("error.json", %{error: error, error_description: error_description}) do
     %{
       error: error,
