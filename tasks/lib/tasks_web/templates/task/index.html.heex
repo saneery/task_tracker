@@ -1,0 +1,31 @@
+<h1>Listing Tasks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Assignee</th>
+      <th>Title</th>
+      <th>Status</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for task <- @tasks do %>
+    <tr>
+      <td><%= task.assignee_id %></td>
+      <td><%= task.title %></td>
+      <td><%= task.status %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.task_path(@conn, :show, task) %></span>
+        <%= if task.status != :closed do %>
+          <span><%= link "Edit", to: Routes.task_path(@conn, :edit, task) %></span>
+        <% end %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Task", to: Routes.task_path(@conn, :new) %></span>
