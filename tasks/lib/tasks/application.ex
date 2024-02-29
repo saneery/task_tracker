@@ -7,6 +7,7 @@ defmodule Tasks.Application do
 
   @impl true
   def start(_type, _args) do
+
     children = [
       # Start the Ecto repository
       Tasks.Repo,
@@ -15,9 +16,14 @@ defmodule Tasks.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Tasks.PubSub},
       # Start the Endpoint (http/https)
-      TasksWeb.Endpoint
+      TasksWeb.Endpoint,
       # Start a worker by calling: Tasks.Worker.start_link(arg)
       # {Tasks.Worker, arg}
+      %{
+        id: Kaffe.GroupMemberSupervisor,
+        start: {Kaffe.GroupMemberSupervisor, :start_link, []},
+        type: :supervisor
+      }
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

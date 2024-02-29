@@ -19,6 +19,8 @@ defmodule AuthWeb.UserRegistrationController do
             &Routes.user_confirmation_url(conn, :edit, &1)
           )
 
+        Auth.KafkaProducer.account_created(user)
+
         conn
         |> put_flash(:info, "User created successfully.")
         |> UserAuth.log_in_user(user)

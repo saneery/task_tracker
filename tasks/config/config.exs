@@ -66,6 +66,20 @@ config :tasks, :pow_assent,
     ]
   ]
 
+config :kaffe,
+  consumer: [
+    endpoints: [localhost: 9092],
+    topics: ["accounts-cud"],
+    consumer_group: "task_tracker",
+    group_config: [
+      {:offset_commit_policy, :commit_to_kafka_v2},
+      {:offset_commit_interval_seconds, 1}
+    ],
+    message_handler: Tasks.KafkaConsumer,
+    offset_reset_policy: :reset_to_earliest,
+    worker_allocation_strategy: :worker_per_topic_partition
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

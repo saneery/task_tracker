@@ -20,7 +20,7 @@ defmodule Tasks.MixProject do
   def application do
     [
       mod: {Tasks.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :kaffe]
     ]
   end
 
@@ -53,7 +53,8 @@ defmodule Tasks.MixProject do
 
       # Optional, but recommended for SSL validation with :httpc adapter
       {:certifi, "~> 2.4"},
-      {:ssl_verify_fun, "~> 1.1"}
+      {:ssl_verify_fun, "~> 1.1"},
+      {:kaffe, "~> 1.0"}
     ]
   end
 

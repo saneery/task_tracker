@@ -5,7 +5,14 @@ defmodule Tasks.Users.User do
 
   schema "users" do
     pow_user_fields()
+    field :role, Ecto.Enum, values: [:admin, :employee, :manager], default: :employee
 
     timestamps()
+  end
+
+  def changeset(user, attrs) do
+    user
+    |> Ecto.Changeset.cast(attrs, [:role, :email])
+    |> Ecto.Changeset.validate_inclusion(:role, ~w(admin employee manager)a)
   end
 end

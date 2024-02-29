@@ -25,6 +25,8 @@ defmodule AuthWeb.UserController do
 
     case Accounts.update_user(user, user_params) do
       {:ok, user} ->
+        Auth.KafkaProducer.account_updated(user)
+
         conn
         |> put_flash(:info, "User updated successfully.")
         |> redirect(to: Routes.user_path(conn, :show, user))
@@ -37,6 +39,8 @@ defmodule AuthWeb.UserController do
   def delete(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
     {:ok, _user} = Accounts.delete_user(user)
+
+    Auth.KafkaProducer.account_deleted(user)
 
     conn
     |> put_flash(:info, "User deleted successfully.")
