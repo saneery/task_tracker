@@ -14,8 +14,12 @@
       <section class="container">
         <nav>
           <ul>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "Задачи", to: Routes.task_path(@conn, :index) %></li>
+            <li><%= link "Задачи", to: Routes.task_path(@conn, :index) %></li>
+            <%= if @current_user do %>
+              <li><%= @current_user.email %></li>
+              <li><%= link "Log out", to: Routes.pow_session_path(@conn, :delete), method: :delete %></li>
+            <% else %>
+              <li><%= link "Log in", to: Routes.pow_assent_authorization_path(@conn, :new, :oauth2) %></li>
             <% end %>
           </ul>
         </nav>

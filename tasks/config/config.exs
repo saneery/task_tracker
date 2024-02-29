@@ -47,6 +47,25 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :tasks, :pow,
+  user: Tasks.Users.User,
+  repo: Tasks.Repo,
+  routes_backend: TasksWeb.PowRouter
+
+config :tasks, :pow_assent,
+  providers: [
+    oauth2: [
+      client_id: "1f90b31b-966e-47b9-bdd0-e3d5966b518d",
+      client_secret: "TasksClientSecret",
+      base_url: "http://localhost:4000/",
+      auth_method: :client_secret_post,
+      nonce: true,
+      strategy: TasksWeb.ProviderAuth,
+      user_url: "http://localhost:4000/api/user",
+      redirect_uri: "http://localhost:4001/auth/oauth2/callback"
+    ]
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
