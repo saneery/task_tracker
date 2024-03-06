@@ -1,8 +1,8 @@
-defmodule Tasks.KafkaConsumer do
+defmodule Accounting.KafkaConsumer do
   require Logger
-  alias Tasks.Repo
-  alias Tasks.Users.User
-  alias Tasks.UserIdentities.UserIdentity
+  alias Accounting.Repo
+  alias Accounting.Users.User
+  alias Accounting.UserIdentities.UserIdentity
 
   def handle_messages(messages) do
     for message <- messages do
@@ -67,7 +67,8 @@ defmodule Tasks.KafkaConsumer do
           "provider" => "oauth2"
         })
         |> Repo.insert()
-      _ -> :ok
+      error ->
+        Logger.error("error with creating user #{inspect(error)}")
     end
   end
 

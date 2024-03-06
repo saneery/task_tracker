@@ -1,0 +1,43 @@
+<h1>Show Transaction</h1>
+
+<ul>
+
+  <li>
+    <strong>User:</strong>
+    <%= @transaction.user_id %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @transaction.description %>
+  </li>
+
+  <li>
+    <strong>Debit:</strong>
+    <%= @transaction.debit %>
+  </li>
+
+  <li>
+    <strong>Credit:</strong>
+    <%= @transaction.credit %>
+  </li>
+
+  <li>
+    <strong>Billing cycle:</strong>
+    <%= @transaction.billing_cycle_id %>
+  </li>
+
+  <li>
+    <strong>Task:</strong>
+    <%= @transaction.task_id %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @transaction.type %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.transaction_path(@conn, :edit, @transaction) %></span> |
+<span><%= link "Back", to: Routes.transaction_path(@conn, :index) %></span>

@@ -1,0 +1,5 @@
+<h1>Edit Billing cycle</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.billing_cycle_path(@conn, :update, @billing_cycle)) %>
+
+<span><%= link "Back", to: Routes.billing_cycle_path(@conn, :index) %></span>
