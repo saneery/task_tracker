@@ -18,7 +18,7 @@ defmodule Tasks.Tracker do
 
   """
   def list_tasks do
-    Repo.all(Task)
+    Repo.all(from(t in Task, preload: :assigned_user))
   end
 
   @doc """
@@ -35,7 +35,7 @@ defmodule Tasks.Tracker do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id)
+  def get_task!(id), do: Repo.get!(Task, id) |> Repo.preload([:assigned_user])
 
   @doc """
   Creates a task.
@@ -50,6 +50,8 @@ defmodule Tasks.Tracker do
 
   """
   def create_task(attrs \\ %{}) do
+    attrs = Map.put(attrs, "public_id", Ecto.UUID.generate())
+
     %Task{}
     |> Task.changeset(attrs)
     |> Repo.insert()

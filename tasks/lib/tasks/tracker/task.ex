@@ -6,6 +6,8 @@ defmodule Tasks.Tracker.Task do
     field :assignee_id, :integer
     field :status, Ecto.Enum, values: [:open, :closed], default: :open
     field :title, :string
+    field :public_id, :string
+    belongs_to :assigned_user, Tasks.Users.User, foreign_key: :assignee_id, define_field: false
 
     timestamps()
   end
@@ -13,7 +15,7 @@ defmodule Tasks.Tracker.Task do
   @doc false
   def changeset(task, attrs) do
     task
-    |> cast(attrs, [:assignee_id, :title])
+    |> cast(attrs, [:assignee_id, :title, :public_id])
     |> validate_required([:assignee_id, :title])
   end
 

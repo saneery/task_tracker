@@ -6,7 +6,7 @@
   <% end %>
 
   <%= label f, :assignee_id %>
-  <%= number_input f, :assignee_id %>
+  <%= select f, :assignee_id, @employers, selected: @changeset.data.assignee_id%>
   <%= error_tag f, :assignee_id %>
 
   <%= label f, :title %>

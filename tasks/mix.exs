@@ -54,7 +54,8 @@ defmodule Tasks.MixProject do
       # Optional, but recommended for SSL validation with :httpc adapter
       {:certifi, "~> 2.4"},
       {:ssl_verify_fun, "~> 1.1"},
-      {:kaffe, "~> 1.0"}
+      {:kaffe, "~> 1.0"},
+      {:schema_registry, path: "../schema_registry"}
     ]
   end
 

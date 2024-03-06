@@ -1,4 +1,5 @@
 <h1>Listing Tasks</h1>
+<span><%= link "Переназначить задачи", to: Routes.task_path(@conn, :reassign_tasks), method: :post, data: [confirm: "Точно?"] %></span>
 
 <table>
   <thead>
@@ -13,7 +14,7 @@
   <tbody>
 <%= for task <- @tasks do %>
     <tr>
-      <td><%= task.assignee_id %></td>
+      <td><%= task.assigned_user.email %></td>
       <td><%= task.title %></td>
       <td><%= task.status %></td>
 
