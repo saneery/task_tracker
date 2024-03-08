@@ -3,10 +3,23 @@ defmodule AccountingWeb.TransactionController do
 
   alias Accounting.Billing
   alias Accounting.Billing.Transaction
+  alias Accounting.Users.User
 
   def index(conn, _params) do
     transactions = Billing.list_transactions()
     render(conn, "index.html", transactions: transactions)
+  end
+
+  def balance(conn, _) do
+    if conn.assigns[:current_user] do
+      transactions = Billing.list_transactions(conn.assigns[:current_user].id)
+      current_balance = Accounting.Repo.get(User, conn.assigns[:current_user].id).balance
+      render(conn, "balance.html", transactions: transactions, current_balance: current_balance)
+    else
+      conn
+      |> put_flash(:error, "Надо авторизоваться")
+      |> redirect(to: Routes.page_path(conn, :index))
+    end
   end
 
   def new(conn, _params) do
@@ -59,4 +72,7 @@ defmodule AccountingWeb.TransactionController do
     |> put_flash(:info, "Transaction deleted successfully.")
     |> redirect(to: Routes.transaction_path(conn, :index))
   end
+
+  defp nil_to_zero(nil), do: 0
+  defp nil_to_zero(num), do: num
 end

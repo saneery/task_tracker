@@ -18,6 +18,7 @@ defmodule Accounting.Application do
       AccountingWeb.Endpoint,
       # Start a worker by calling: Accounting.Worker.start_link(arg)
       # {Accounting.Worker, arg}
+      Accounting.BillingCycleCron,
       %{
         id: Kaffe.GroupMemberSupervisor,
         start: {Kaffe.GroupMemberSupervisor, :start_link, []},

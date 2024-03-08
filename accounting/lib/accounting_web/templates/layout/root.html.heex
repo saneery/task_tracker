@@ -14,9 +14,10 @@
       <section class="container">
         <nav>
           <ul>
-            <li><%= link "Мой счет", to: Routes.page_path(@conn, :index) %></li>
+            <li><%= link "Мой счет", to: Routes.transaction_path(@conn, :balance) %></li>
             <%= if @current_user && @current_user.role in [:admin, :accountant] do %>
-              <li><%= link "Статистика по компании", to: Routes.page_path(@conn, :index) %></li>
+              <li><%= link "Статистика по компании", to: Routes.page_path(@conn, :company_dashboard) %></li>
+              <li><%= link "Аналитика", to: Routes.page_path(@conn, :analytics) %></li>
             <% end %>
             <%= if @current_user do %>
               <li><%= @current_user.email %></li>

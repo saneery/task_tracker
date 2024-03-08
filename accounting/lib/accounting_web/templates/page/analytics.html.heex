@@ -1,0 +1,18 @@
+<h1>АНАЛИТИКА</h1>
+
+<label>ЗАРАБОТАНО СЕГОДНЯ: <%= @today_earned %></label>
+<label>ПОПУГОВ В МИНУСЕ: <%= @negative_balance_count %></label>
+
+
+<%= form_for @conn, Routes.page_path(@conn, :analytics), [as: "datetime_range", method: "get"], fn f -> %>
+  <label class="control-label">НАЧАЛО:</label>
+  <%= date_select f, :start_date %>
+  <label class="control-label">КОНЕЦ:</label>
+  <%= date_select f, :end_date %>
+  <div>
+    <%= submit "Применить" %>
+  </div>
+<% end %>
+
+<label>САМАЯ ДОРОГАЯ ЗАДАЧА: <%= @most_expensive_tasks %></label>
+

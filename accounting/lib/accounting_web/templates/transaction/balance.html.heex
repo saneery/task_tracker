@@ -1,0 +1,29 @@
+<h1>МОЙ СЧЕТ</h1>
+
+<span><b>ТЕКУЩИЙ БАЛАНС: <%= @current_balance %></b></span>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Debit</th>
+      <th>Credit</th>
+      <th>Billing cycle</th>
+      <th>Type</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for transaction <- @transactions do %>
+    <tr>
+      <td><%= transaction.description %></td>
+      <td><%= transaction.debit %></td>
+      <td><%= transaction.credit %></td>
+      <td><%= transaction.billing_cycle_id %></td>
+      <td><%= transaction.type %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+

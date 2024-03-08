@@ -240,8 +240,15 @@ defmodule Accounting.Billing do
     )
   end
 
-  def update_user_balance(user, balance) do
+  def update_user_balance(%User{} = user, balance) do
     user
+    |> User.changeset(%{balance: balance})
+    |> Repo.update()
+  end
+
+  def update_user_balance(id, balance) when is_integer(id) do
+    User
+    |> Repo.get!(User)
     |> User.changeset(%{balance: balance})
     |> Repo.update()
   end

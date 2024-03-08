@@ -2,7 +2,7 @@ defmodule AccountingWeb.Router do
   use AccountingWeb, :router
   use Pow.Phoenix.Router
   use PowAssent.Phoenix.Router
-  # import AccountingWeb.AuthCheck
+  import AccountingWeb.AuthCheck
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -18,7 +18,9 @@ defmodule AccountingWeb.Router do
   end
 
   pipeline :protected do
-    # plug :require_authenticated_user
+    plug :browser
+    plug :require_authenticated_user
+    plug :require_role, [:admin, :manager]
   end
 
   scope "/" do
@@ -32,6 +34,13 @@ defmodule AccountingWeb.Router do
 
     get "/", AccountingWeb.PageController, :index
     pow_assent_routes()
+
+    resources "/transactions", AccountingWeb.TransactionController
+    get "/my_balance", AccountingWeb.TransactionController, :balance
+
+    pipe_through :protected
+    get "/company_dashboard", AccountingWeb.PageController, :company_dashboard
+    get "/analytics", AccountingWeb.PageController, :analytics
   end
 
   scope "/", Pow.Phoenix, as: "pow" do

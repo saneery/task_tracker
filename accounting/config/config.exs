@@ -38,7 +38,7 @@ config :phoenix, :json_library, Jason
 config :accounting, :pow,
   user: Accounting.Users.User,
   repo: Accounting.Repo,
-  routes_backend: AccountingWeb.Accounting
+  routes_backend: AccountingWeb.PowRouter
 
 config :accounting, :pow_assent,
   providers: [
@@ -57,7 +57,7 @@ config :accounting, :pow_assent,
 config :kaffe,
   consumer: [
     endpoints: [localhost: 9092],
-    topics: ["accounts-cud"],
+    topics: ["accounts-cud", "tasks-cud", "tasks"],
     consumer_group: "billing",
     group_config: [
       {:offset_commit_policy, :commit_to_kafka_v2},
