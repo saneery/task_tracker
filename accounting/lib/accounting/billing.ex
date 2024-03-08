@@ -4,9 +4,12 @@ defmodule Accounting.Billing do
   """
 
   import Ecto.Query, warn: false
+  alias Accounting.Billing
   alias Accounting.Repo
 
   alias Accounting.Billing.Transaction
+  alias Accounting.UserIdentities.UserIdentity
+  alias Accounting.Users.User
 
   @doc """
   Returns the list of transactions.
@@ -19,6 +22,18 @@ defmodule Accounting.Billing do
   """
   def list_transactions do
     Repo.all(Transaction)
+  end
+
+  def list_transactions(user_id) do
+    Repo.all(from(t in Transaction, where: t.user_id == ^user_id))
+  end
+
+  def calculate_transactions(bc_id) do
+    query = from t in Transaction,
+      where: t.billing_cycle_id == ^bc_id,
+      select: sum(t.debit) - sum(t.credit)
+
+    Repo.one(query)
   end
 
   @doc """
@@ -196,5 +211,38 @@ defmodule Accounting.Billing do
   """
   def change_billing_cycle(%BillingCycle{} = billing_cycle, attrs \\ %{}) do
     BillingCycle.changeset(billing_cycle, attrs)
+  end
+
+  def get_billing_cycle_for_user(user_id) do
+    Repo.get_by(BillingCycle, user_id: user_id)
+  end
+
+  def get_user_by_public_id(public_id) do
+    query =
+      from ui in UserIdentity,
+      join: u in User, on: [id: ui.user_id],
+      where: ui.uid == ^public_id,
+      select: u
+
+    Repo.one(query)
+  end
+
+  def close_old_billing_cycles() do
+    Repo.update_all(
+      from(bc in BillingCycle, where: fragment("?::date < CURRENT_DATE AND ? = 'open'", bc.start_date, bc.status)),
+      set: [end_date: NaiveDateTime.utc_now(), status: :closed]
+    )
+  end
+
+  def old_billing_cycles() do
+    Repo.all(
+      from(bc in BillingCycle, where: fragment("?::date < CURRENT_DATE AND ? = 'open'", bc.start_date, bc.status))
+    )
+  end
+
+  def update_user_balance(user, balance) do
+    user
+    |> User.changeset(%{balance: balance})
+    |> Repo.update()
   end
 end

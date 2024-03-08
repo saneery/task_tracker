@@ -13,7 +13,13 @@ defmodule Accounting.Tasks.Task do
   @doc false
   def changeset(task, attrs) do
     task
-    |> cast(attrs, [:debit_cost, :credit_cost, :public_id])
-    |> validate_required([:debit_cost, :credit_cost, :public_id])
+    |> cast(attrs, [:public_id])
+    |> validate_required([:public_id])
+  end
+
+  def set_costs(changeset) do
+    changeset
+    |> put_change(:debit_cost, Enum.random(20..40))
+    |> put_change(:credit_cost, Enum.random(10..20))
   end
 end

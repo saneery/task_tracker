@@ -9,5 +9,7 @@ defmodule Accounting.Repo.Migrations.CreateTasks do
 
       timestamps()
     end
+
+    create unique_index(:tasks, [:public_id])
   end
 end

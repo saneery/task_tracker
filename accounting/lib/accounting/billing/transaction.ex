@@ -4,11 +4,11 @@ defmodule Accounting.Billing.Transaction do
 
   schema "transactions" do
     field :billing_cycle_id, :integer
-    field :credit, :float
-    field :debit, :float
+    field :credit, :float, default: 0.0
+    field :debit, :float, default: 0.0
     field :description, :string
     field :task_id, :integer
-    field :type, :string
+    field :type, Ecto.Enum, values: [:enrollment, :withdrawal, :payment]
     field :user_id, :integer
 
     timestamps()
@@ -18,6 +18,6 @@ defmodule Accounting.Billing.Transaction do
   def changeset(transaction, attrs) do
     transaction
     |> cast(attrs, [:user_id, :description, :debit, :credit, :billing_cycle_id, :task_id, :type])
-    |> validate_required([:user_id, :description, :debit, :credit, :billing_cycle_id, :task_id, :type])
+    |> validate_required([:user_id, :billing_cycle_id, :type])
   end
 end

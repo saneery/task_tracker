@@ -6,7 +6,7 @@ defmodule Accounting.Billing.BillingCycle do
     field :user_id, :integer
     field :end_date, :naive_datetime
     field :start_date, :naive_datetime
-    field :status, :string
+    field :status, Ecto.Enum, values: [:open, :closed], default: :open
 
     timestamps()
   end
@@ -15,6 +15,6 @@ defmodule Accounting.Billing.BillingCycle do
   def changeset(billing_cycle, attrs) do
     billing_cycle
     |> cast(attrs, [:user_id, :status, :start_date, :end_date])
-    |> validate_required([:user_id, :status, :start_date, :end_date])
+    |> validate_required([:user_id, :start_date])
   end
 end

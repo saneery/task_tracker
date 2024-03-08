@@ -6,6 +6,7 @@ defmodule Accounting.Users.User do
   schema "users" do
     pow_user_fields()
     field :role, Ecto.Enum, values: [:admin, :employee, :manager, :accountant], default: :employee
+    field :balance, :float, default: 0.0
 
     timestamps()
   end
