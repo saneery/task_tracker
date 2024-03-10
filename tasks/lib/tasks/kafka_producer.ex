@@ -9,11 +9,12 @@ defmodule Tasks.KafkaProducer do
       "data" => %{
         "public_id" => task.public_id,
         "status" => Atom.to_string(task.status),
-        "title" => task.title
+        "title" => task.title,
+        "jira_id" => task.jira_id
       }
     })
 
-    case SchemaRegistry.validate_event(event, "tasks.created", 1) do
+    case SchemaRegistry.validate_event(event, "tasks.created", 2) do
       :ok -> Kaffe.Producer.produce_sync("tasks-cud", "key", Jason.encode!(event))
       {:error, desc} ->
         Logger.error("TaskCreated event producing error #{inspect(desc)}")
@@ -26,11 +27,12 @@ defmodule Tasks.KafkaProducer do
       "data" => %{
         "public_id" => task.public_id,
         "status" => Atom.to_string(task.status),
-        "title" => task.title
+        "title" => task.title,
+        "jira_id" => task.jira_id
       }
     })
 
-    case SchemaRegistry.validate_event(event, "tasks.updated", 1) do
+    case SchemaRegistry.validate_event(event, "tasks.updated", 2) do
       :ok -> Kaffe.Producer.produce_sync("tasks-cud", "key", Jason.encode!(event))
       {:error, desc} ->
         Logger.error("TaskUpdated event producing error #{inspect(desc)}")

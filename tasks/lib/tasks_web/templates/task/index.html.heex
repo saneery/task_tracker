@@ -15,7 +15,7 @@
 <%= for task <- @tasks do %>
     <tr>
       <td><%= task.assigned_user.email %></td>
-      <td><%= task.title %></td>
+      <td>[<%= task.jira_id %>] <%= task.title %></td>
       <td><%= task.status %></td>
 
       <td>
