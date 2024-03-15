@@ -78,6 +78,10 @@ config :kaffe,
     message_handler: Tasks.KafkaConsumer,
     offset_reset_policy: :reset_to_earliest,
     worker_allocation_strategy: :worker_per_topic_partition
+  ],
+  producer: [
+    endpoints: [localhost: 9092], # [hostname: port]
+    topics: []
   ]
 
 # Import environment specific config. This must remain at the bottom

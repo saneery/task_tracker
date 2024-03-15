@@ -6,12 +6,16 @@
   <% end %>
 
   <%= label f, :assignee_id %>
-  <%= number_input f, :assignee_id %>
+  <%= select f, :assignee_id, @employers, selected: @changeset.data.assignee_id%>
   <%= error_tag f, :assignee_id %>
 
   <%= label f, :title %>
   <%= text_input f, :title %>
   <%= error_tag f, :title %>
+
+  <%= label f, :jira_id %>
+  <%= text_input f, :jira_id %>
+  <%= error_tag f, :jira_id %>
 
   <div>
     <%= submit "Save" %>

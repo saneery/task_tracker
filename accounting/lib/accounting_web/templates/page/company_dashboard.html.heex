@@ -1,0 +1,21 @@
+<h1>Сколько заработала компания</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Дата</th>
+      <th>Потрачено</th>
+      <th>Заработано</th>
+    </tr>
+  </thead>
+  <tbody>
+  <%= for {date, debit, credit} <- @stats do %>
+    <tr>
+      <td><%= date %></td>
+      <td><%= debit %></td>
+      <td><%= credit %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+

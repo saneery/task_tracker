@@ -6,12 +6,12 @@
 
   <li>
     <strong>Assignee:</strong>
-    <%= @task.assignee_id %>
+    <%= @task.assigned_user.email %>
   </li>
 
   <li>
     <strong>Title:</strong>
-    <%= @task.title %>
+    [<%= task.jira_id %>] <%= @task.title %>
   </li>
 
   <li>

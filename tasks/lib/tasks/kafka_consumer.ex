@@ -21,7 +21,7 @@ defmodule Tasks.KafkaConsumer do
 
 
 
-  defp handle_event(%{"event" => "account_created", "account" => attrs}) do
+  defp handle_event(%{"event_name" => "AccountCreated", "data" => attrs}) do
     case Repo.get_by(UserIdentity, uid: attrs["public_id"]) do
       nil ->
         create_user(attrs)
@@ -30,7 +30,7 @@ defmodule Tasks.KafkaConsumer do
     end
   end
 
-  defp handle_event(%{"event" => "account_updated", "account" => attrs}) do
+  defp handle_event(%{"event_name" => "AccountUpdated", "data" => attrs}) do
     case Repo.get_by(UserIdentity, uid: attrs["public_id"]) do
       nil -> :ok
       user_identity ->
@@ -40,7 +40,7 @@ defmodule Tasks.KafkaConsumer do
     end
   end
 
-  defp handle_event(%{"event" => "account_deleted", "account" => attrs}) do
+  defp handle_event(%{"event_name" => "AccountDeleted", "data" => attrs}) do
     case Repo.get_by(UserIdentity, uid: attrs["public_id"]) do
       nil -> :ok
       user_identity ->

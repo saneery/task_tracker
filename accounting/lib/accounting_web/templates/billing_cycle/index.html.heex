@@ -1,0 +1,32 @@
+<h1>Listing Billing cycles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Account</th>
+      <th>Status</th>
+      <th>Start date</th>
+      <th>End date</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for billing_cycle <- @billing_cycles do %>
+    <tr>
+      <td><%= billing_cycle.user_id %></td>
+      <td><%= billing_cycle.status %></td>
+      <td><%= billing_cycle.start_date %></td>
+      <td><%= billing_cycle.end_date %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.billing_cycle_path(@conn, :show, billing_cycle) %></span>
+        <span><%= link "Edit", to: Routes.billing_cycle_path(@conn, :edit, billing_cycle) %></span>
+        <span><%= link "Delete", to: Routes.billing_cycle_path(@conn, :delete, billing_cycle), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Billing cycle", to: Routes.billing_cycle_path(@conn, :new) %></span>

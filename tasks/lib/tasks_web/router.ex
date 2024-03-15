@@ -52,6 +52,7 @@ defmodule TasksWeb.Router do
 
     resources "/tasks", TaskController
     post "/tasks/close", TaskController, :close_task
+    post "/tasks/reassign_all", TaskController, :reassign_tasks
   end
 
 end

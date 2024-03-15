@@ -1,0 +1,38 @@
+<h1>Listing Transactions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Description</th>
+      <th>Debit</th>
+      <th>Credit</th>
+      <th>Billing cycle</th>
+      <th>Task</th>
+      <th>Type</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for transaction <- @transactions do %>
+    <tr>
+      <td><%= transaction.user_id %></td>
+      <td><%= transaction.description %></td>
+      <td><%= transaction.debit %></td>
+      <td><%= transaction.credit %></td>
+      <td><%= transaction.billing_cycle_id %></td>
+      <td><%= transaction.task_id %></td>
+      <td><%= transaction.type %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.transaction_path(@conn, :show, transaction) %></span>
+        <span><%= link "Edit", to: Routes.transaction_path(@conn, :edit, transaction) %></span>
+        <span><%= link "Delete", to: Routes.transaction_path(@conn, :delete, transaction), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Transaction", to: Routes.transaction_path(@conn, :new) %></span>

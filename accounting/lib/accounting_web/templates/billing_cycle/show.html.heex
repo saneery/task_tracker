@@ -1,0 +1,28 @@
+<h1>Show Billing cycle</h1>
+
+<ul>
+
+  <li>
+    <strong>Account:</strong>
+    <%= @billing_cycle.user_id %>
+  </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @billing_cycle.status %>
+  </li>
+
+  <li>
+    <strong>Start date:</strong>
+    <%= @billing_cycle.start_date %>
+  </li>
+
+  <li>
+    <strong>End date:</strong>
+    <%= @billing_cycle.end_date %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.billing_cycle_path(@conn, :edit, @billing_cycle) %></span> |
+<span><%= link "Back", to: Routes.billing_cycle_path(@conn, :index) %></span>
